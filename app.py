@@ -14,8 +14,13 @@ This app provides interactive visualizations for Superstore e-commerce sales dat
 Use the filters to explore insights like sales by category, sub-category, region, and trends over time.
 """)
 
-# Load Data
-data = pd.read_csv("Sample - Superstore.csv", encoding='latin-1')
+# File uploader
+uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file, encoding='latin-1')
+else:
+    st.warning("Please upload a CSV file to proceed.")
+    st.stop()
 
 # Preprocessing
 data['Order Date'] = pd.to_datetime(data['Order Date'])
@@ -58,4 +63,3 @@ fig4 = px.pie(region_profit, names='Region', values='Profit', title="Profit Shar
 st.plotly_chart(fig4)
 
 st.markdown("---")
-st.markdown("Made with ❤️ using Streamlit")
