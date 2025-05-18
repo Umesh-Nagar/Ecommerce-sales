@@ -102,4 +102,20 @@ segment_data = filtered_data.groupby('Segment')[['Sales', 'Profit']].sum().reset
 fig5 = px.bar(segment_data, x='Segment', y=['Sales', 'Profit'], barmode='group', title="Sales and Profit by Segment")
 st.plotly_chart(fig5)
 
+# Ending Section
+st.markdown("## Thank You for Exploring the Dashboard!")
+st.success("We hope this dashboard helped you uncover valuable insights from the data.")
+
+# Feedback Section
+st.markdown("### Your Feedback Matters!")
+rating = st.slider("Rate this dashboard experience", 1, 5, 4)
+feedback = st.text_area("Any suggestions or comments?")
+
+if st.button("Submit Feedback"):
+    st.balloons()
+    st.success("Thanks for your feedback! 🚀")
+
+# Developer Info or Footer
 st.markdown("---")
+st.markdown("**Developed by [Umesh Nagar]**")
+st.markdown("🌐 [Visit My GitHub](https://github.com/Umesh-Nagar))
