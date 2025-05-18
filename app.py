@@ -30,12 +30,34 @@ data['Ship Date'] = pd.to_datetime(data['Ship Date'])
 st.sidebar.header("Filter Options")
 region = st.sidebar.multiselect("Select Region(s):", options=data['Region'].unique(), default=data['Region'].unique())
 category = st.sidebar.multiselect("Select Category:", options=data['Category'].unique(), default=data['Category'].unique())
+date_range = st.sidebar.date_input("Select Order Date Range:", [data['Order Date'].min(), data['Order Date'].max()])
 
-filtered_data = data[(data['Region'].isin(region)) & (data['Category'].isin(category))]
+filtered_data = data[
+    (data['Region'].isin(region)) &
+    (data['Category'].isin(category)) &
+    (data['Order Date'] >= pd.to_datetime(date_range[0])) &
+    (data['Order Date'] <= pd.to_datetime(date_range[1]))
+]
+
+# KPI Metrics
+st.subheader("📌 Key Performance Indicators")
+kpi1, kpi2, kpi3 = st.columns(3)
+kpi1.metric("Total Sales", f"${filtered_data['Sales'].sum():,.2f}")
+kpi2.metric("Total Profit", f"${filtered_data['Profit'].sum():,.2f}")
+kpi3.metric("Total Orders", filtered_data['Order ID'].nunique())
 
 # Show filtered data
 st.subheader("📄 Filtered Data Preview")
 st.dataframe(filtered_data.head())
+
+# Download filtered data
+csv = filtered_data.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="📥 Download Filtered Data as CSV",
+    data=csv,
+    file_name='filtered_data.csv',
+    mime='text/csv',
+)
 
 # Sales by Category
 st.subheader("💰 Total Sales by Category")
