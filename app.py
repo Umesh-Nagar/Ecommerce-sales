@@ -118,4 +118,4 @@ if st.button("Submit Feedback"):
 # Developer Info or Footer
 st.markdown("---")
 st.markdown("**Developed by [Umesh Nagar]**")
-st.markdown("🌐 [Visit My GitHub](https://github.com/Umesh-Nagar))
+st.markdown("🌐 [Visit My GitHub](https://github.com/Umesh-Nagar)")
